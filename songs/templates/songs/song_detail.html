@@ -2,49 +2,110 @@
 
 {% block content %}
 
-<div style="max-width:900px; margin:40px auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+<div class="song-detail-container">
 
     <!-- Song Title -->
-    <h2 style="text-align:center; font-size:36px; color:#222; text-shadow: 1px 1px 3px rgba(255,255,255,0.6); margin-bottom:25px;">
-        {{ song.title }}
-    </h2>
+    <h2 class="song-title">{{ song.title }}</h2>
 
     <!-- PowerPoint Download -->
-    {% if song.powerpoint %}
-    <div style="text-align:center; margin-bottom:30px;">
-        <a href="{{ song.powerpoint.url }}" 
-           style="display:inline-block; padding:10px 20px; background:black; color:white; text-decoration:none; border-radius:6px; font-weight:bold; transition: background 0.2s;">
+    {% if song.powerpoint_url %}
+    <div class="button-container">
+        <a href="{{ song.powerpoint_url }}" target="_blank" class="button">
+            ⬇ تحميل ملف PowerPoint
+        </a>
+    </div>
+    {% elif song.powerpoint_file %}
+    <div class="button-container">
+        <a href="{{ song.powerpoint_file.url }}" target="_blank" class="button">
             ⬇ تحميل ملف PowerPoint
         </a>
     </div>
     {% endif %}
 
-    <hr style="border:1px solid #ccc; margin-bottom:30px;">
+    <hr class="divider">
 
     <!-- Lyrics -->
-    <pre style="
-        white-space: pre-wrap;
-        font-size:18px;
-        line-height:1.6;
-        padding:20px;
-        background: rgba(255,255,255,0.85);
-        border-radius:8px;
-        border:1px solid #ccc;
-        direction: rtl;
-        color:#000;
-        overflow-x:auto;
-    ">
-{{ lyrics|safe }}
-    </pre>
+    <pre class="lyrics">{{ lyrics|safe }}</pre>
 
     <!-- Back Link -->
-    <div style="text-align:center; margin-top:30px;">
-        <a href="{% url 'song_list' %}?keywords=&lyrics={{ search_term }}" 
-           style="display:inline-block; padding:10px 20px; background:black; color:white; text-decoration:none; border-radius:6px; font-weight:bold; transition: background 0.2s;">
+    <div class="button-container">
+        <a href="{% url 'song_list' %}?keywords=&lyrics={{ search_term }}" class="button">
             ← العودة إلى الترنيمات
         </a>
     </div>
 
 </div>
+
+<!-- Styles specific to this page -->
+<style>
+.song-detail-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #000;
+}
+
+.song-title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 3px rgba(255,255,255,0.6);
+}
+
+.divider {
+    border: 1px solid #ccc;
+    margin-bottom: 30px;
+}
+
+.lyrics {
+    white-space: pre-wrap;
+    font-size: 18px;
+    line-height: 1.6;
+    padding: 20px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    direction: rtl;
+    color: #000;
+    overflow-x: auto;
+}
+
+.button-container {
+    text-align: center;
+    margin: 25px 0;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.button:hover {
+    background: #333;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .song-title {
+        font-size: 28px;
+    }
+    .lyrics {
+        font-size: 16px;
+        padding: 15px;
+    }
+    .button {
+        width: 100%;
+        padding: 12px;
+    }
+}
+</style>
 
 {% endblock %}

@@ -22,10 +22,10 @@ class Song(models.Model):
         verbose_name="كلمات الترنيمة"
     )
 
-    powerpoint = models.FileField(
-        upload_to='powerpoints/',
-        verbose_name="ملف PowerPoint"
-    )
+    powerpoint_url = models.URLField(blank=True, null=True, verbose_name="PowerPoint URL")
+
+    # Optional: keep old FileField until migration is done
+    powerpoint_file = models.FileField(upload_to='powerpoints/', blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 

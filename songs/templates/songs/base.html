@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -14,14 +15,15 @@
         html, body {
             height: 100%;
             margin: 0;
-            display: flex;
-            flex-direction: column;
         }
 
         body {
             font-family: 'Almarai', sans-serif;
             color: #000;
-            background: url('/static/images/church_bg.jpg') no-repeat center center fixed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: url("{% static '/images/church_bg.jpg' %}") no-repeat center center fixed;
             background-size: cover;
             position: relative;
         }
@@ -98,7 +100,8 @@
             padding: 20px 0;
             color: #fff;
             font-size: 14px;
-            background-color: rgba(0,0,0,0.7); /* optional for readability */
+            background-color: rgba(0,0,0,0.7); /* makes it readable over background */
+            margin-top: auto; /* ensures footer sticks to bottom */
         }
 
         /* Responsive */
