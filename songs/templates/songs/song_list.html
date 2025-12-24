@@ -1,0 +1,79 @@
+{% extends 'songs/base.html' %}
+
+{% block content %}
+
+<div style="max-width:1000px; margin:40px auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+    <!-- Page Title -->
+    <h2 style="text-align:center; font-size:36px; color:#222; text-shadow: 1px 1px 3px rgba(255,255,255,0.6); margin-bottom:30px;">الترنيمات</h2>
+
+    <!-- Search Form -->
+    <form method="get" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:30px;">
+        <input name="keywords" placeholder="بحث بالكلمات المفتاحية"
+               value="{{ keyword_q }}"
+               style="padding:10px 15px; border-radius:4px; border:1px solid #000; flex:1; min-width:200px; font-size:16px; color:black; background: rgba(255,255,255,0.8);">
+        <input name="lyrics" placeholder="بحث في كلمات الترنيمة"
+               value="{{ lyrics_q }}"
+               style="padding:10px 15px; border-radius:4px; border:1px solid #000; flex:1; min-width:200px; font-size:16px; color:black; background: rgba(255,255,255,0.8);">
+        <button type="submit"
+                style="padding:10px 20px; border:none; background:black; color:white; border-radius:4px; cursor:pointer; font-size:16px; transition: background 0.2s;">
+            🔍 بحث
+        </button>
+    </form>
+
+    <!-- Songs Table -->
+        <table style="width:100%; border-collapse: collapse; text-align:right; border:1px solid #000; background: rgba(255,255,255,0.8);">
+            <thead>
+                <tr style="background:black; color:white; text-align:center;">
+                    <th style="padding:12px; border:1px solid #000;">الترنيمة</th>
+                    <th style="padding:12px; border:1px solid #000;">أنثروبولوجي</th>
+                    <th style="padding:12px; border:1px solid #000;">لاهوتي</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for song in songs|dictsort:"title" %}
+                <tr style="border-bottom:1px solid #000; text-align:right;">
+                    <td style="padding:10px; text-align:right;">
+                        <a href="{% url 'song_detail' song.id %}?lyrics={{ lyrics_q }}" 
+                        class="song-link">
+                            {{ song.title }}
+                        </a>
+                    </td>
+                    <td style="padding:10px; text-align:right;">{{ song.anthropological_keywords }}</td>
+                    <td style="padding:10px; text-align:right;">{{ song.theological_keywords }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" style="text-align:center; padding:15px; color:#555;">لا توجد ترنيمات مطابقة للبحث.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <style>
+            /* Hover effect for song links */
+            .song-link {
+                color: #000;
+                font-weight: bold;
+                text-decoration: none;
+                transition: color 0.2s, transform 0.2s;
+            }
+
+            .song-link:hover {
+                color: #444; /* Slightly darker on hover */
+                text-decoration: underline;
+                transform: translateX(3px); /* subtle movement */
+            }
+        </style>
+
+    <!-- Back Button -->
+    <div style="text-align:center; margin-top:30px;">
+        <a href="{% url 'welcome' %}" 
+           style="padding:10px 20px; background:black; color:white; border-radius:4px; text-decoration:none; transition: background 0.2s;">
+            العودة
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

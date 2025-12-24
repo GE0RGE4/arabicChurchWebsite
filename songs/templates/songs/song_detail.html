@@ -1,0 +1,50 @@
+{% extends 'songs/base.html' %}
+
+{% block content %}
+
+<div style="max-width:900px; margin:40px auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+    <!-- Song Title -->
+    <h2 style="text-align:center; font-size:36px; color:#222; text-shadow: 1px 1px 3px rgba(255,255,255,0.6); margin-bottom:25px;">
+        {{ song.title }}
+    </h2>
+
+    <!-- PowerPoint Download -->
+    {% if song.powerpoint %}
+    <div style="text-align:center; margin-bottom:30px;">
+        <a href="{{ song.powerpoint.url }}" 
+           style="display:inline-block; padding:10px 20px; background:black; color:white; text-decoration:none; border-radius:6px; font-weight:bold; transition: background 0.2s;">
+            ⬇ تحميل ملف PowerPoint
+        </a>
+    </div>
+    {% endif %}
+
+    <hr style="border:1px solid #ccc; margin-bottom:30px;">
+
+    <!-- Lyrics -->
+    <pre style="
+        white-space: pre-wrap;
+        font-size:18px;
+        line-height:1.6;
+        padding:20px;
+        background: rgba(255,255,255,0.85);
+        border-radius:8px;
+        border:1px solid #ccc;
+        direction: rtl;
+        color:#000;
+        overflow-x:auto;
+    ">
+{{ lyrics|safe }}
+    </pre>
+
+    <!-- Back Link -->
+    <div style="text-align:center; margin-top:30px;">
+        <a href="{% url 'song_list' %}?keywords=&lyrics={{ search_term }}" 
+           style="display:inline-block; padding:10px 20px; background:black; color:white; text-decoration:none; border-radius:6px; font-weight:bold; transition: background 0.2s;">
+            ← العودة إلى الترنيمات
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

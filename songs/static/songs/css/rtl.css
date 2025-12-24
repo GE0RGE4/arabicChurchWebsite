@@ -1,0 +1,38 @@
+/* Force RTL direction in Django Admin */
+
+body {
+    direction: rtl;
+    text-align: right;
+}
+
+input[type="text"],
+input[type="search"],
+textarea {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Fix label alignment */
+.form-row label {
+    float: right;
+}
+
+/* Fix help text */
+.help {
+    text-align: right;
+}
+
+/* Fix fieldset */
+fieldset {
+    direction: rtl;
+}
+
+/* Fix History button alignment in Django Admin for RTL */
+.historylink {
+    float: left !important;  /* move it left instead of right */
+    margin-left: 0;
+    margin-right: 600px;
+}
+.object-tools .addlink {
+    display: none !important;
+}

@@ -1,0 +1,115 @@
+{% extends 'songs/base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .welcome-container {
+        text-align: center;
+        margin-top: 80px;
+    }
+
+    .welcome-title {
+        font-size: 48px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 15px;
+    }
+
+    .welcome-subtitle {
+        font-size: 20px;
+        color: #fff;
+        margin-bottom: 60px;
+    }
+
+    .cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 40px;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 220px;
+        height: 180px;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        font-size: 22px;
+        color: #000;
+        text-decoration: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+    }
+
+    .card.disabled {
+        color: #888;
+        background: #f8f8f8;
+        cursor: not-allowed;
+    }
+
+    .admin-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #000;
+        color: #fff;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 14px;
+        text-decoration: none;
+        transition: background 0.2s;
+    }
+
+    .admin-button:hover {
+        background: #d2cdcd;
+    }
+
+    @media (max-width: 600px) {
+        .cards {
+            gap: 20px;
+        }
+    }
+</style>
+
+<div class="welcome-container">
+
+    <!-- Admin Button -->
+    <a href="/admin/" class="admin-button">Admin</a>
+
+    <!-- Title -->
+    <h1 class="welcome-title">أهلاً بكم في تطبيق الكنيسة</h1>
+
+    <p class="welcome-subtitle">
+        اختر القسم الذي تريد الدخول إليه
+    </p>
+
+    <!-- Section Cards -->
+    <div class="cards">
+
+        <a href="{% url 'song_list' %}" class="card">
+            🎵 الترنيمات
+        </a>
+
+        <div class="card disabled">
+            👥 دليل الأعضاء
+            <br>
+            <small>(قريباً)</small>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
