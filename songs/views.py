@@ -7,7 +7,8 @@ import re
 def welcome(request):
     return render(request, 'songs/welcome.html')
 
-# Song list with search
+
+# Song list with multi-keyword search
 def song_list(request):
     keyword_q = request.GET.get('keywords', '').strip()
     lyrics_q = request.GET.get('lyrics', '').strip()
@@ -15,10 +16,16 @@ def song_list(request):
     songs = Song.objects.all()
 
     if keyword_q:
-        songs = songs.filter(
-            Q(anthropological_keywords__icontains=keyword_q) |
-            Q(theological_keywords__icontains=keyword_q)
-        )
+        # Support English comma , and Arabic comma ،
+        raw_keywords = re.split(r'[،,]', keyword_q)
+        keywords = [k.strip() for k in raw_keywords if k.strip()]
+
+        # AND logic: song must contain ALL keywords
+        for kw in keywords:
+            songs = songs.filter(
+                Q(anthropological_keywords__icontains=kw) |
+                Q(theological_keywords__icontains=kw)
+            )
 
     if lyrics_q:
         songs = songs.filter(lyrics__icontains=lyrics_q)
@@ -29,6 +36,7 @@ def song_list(request):
         'lyrics_q': lyrics_q,
     })
 
+
 # Song detail page
 def song_detail(request, song_id):
     song = get_object_or_404(Song, id=song_id)
@@ -37,7 +45,12 @@ def song_detail(request, song_id):
     lyrics = song.lyrics
     if search_term:
         pattern = re.escape(search_term)
-        lyrics = re.sub(pattern, r'<mark>\g<0></mark>', lyrics, flags=re.IGNORECASE)
+        lyrics = re.sub(
+            pattern,
+            r'<mark>\g<0></mark>',
+            lyrics,
+            flags=re.IGNORECASE
+        )
 
     return render(request, 'songs/song_detail.html', {
         'song': song,

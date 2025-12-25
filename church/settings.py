@@ -13,7 +13,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # ---------------------------
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")  # use env var in production
-DEBUG =True
+
+#os.environ.get("DEBUG", "False") == "True"
+
+DEBUG = False
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")  # set your Render domain
 
 # ---------------------------
@@ -101,9 +104,9 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"  # where collectstatic will gather all files
 
 # Optional: additional static directories (like your app-level static)
-# STATICFILES_DIRS = [
-#     BASE_DIR / "songs" / "static",
-# ]
+STATICFILES_DIRS = [
+     BASE_DIR / "songs" / "static",
+ ]
 
 # ---------------------------
 # Media files (uploads)
